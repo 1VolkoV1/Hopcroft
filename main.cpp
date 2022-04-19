@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 
-#include"Automata.hpp"
+#include"Automata.cpp"
 
 //test automata's work on input word:
 int testFromAutomata() {

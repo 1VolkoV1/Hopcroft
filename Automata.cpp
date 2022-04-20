@@ -8,7 +8,7 @@ Automata::Automata(
   std::vector<int> __Q,
   int __q0,
   std::vector<int> __Q_f,
-  std::vector<std::vector<int>> __f
+  std::vector<std::vector<int > > __f
 ) {
   T = __T;
   Q = __Q;

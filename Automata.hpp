@@ -14,14 +14,14 @@ class Automata {
      *
      * all missing edges point towards -1
      */
-    std::vector<std::vector<int>> f;
+    std::vector<std::vector<int > > f;
 
     Automata(
       std::vector<int> __T,
       std::vector<int> __Q,
       int __q0,
       std::vector<int> __Q_f,
-      std::vector<std::vector<int>> __f
+      std::vector<std::vector<int > > __f
     );
     //test if the Automata accept a word:
     bool test(const char* word);

@@ -49,7 +49,7 @@ AST* createHash() {
   pos++;
   return hash;
 }
-d
+
 AST* createCat(
   const char* left,
   const char* right,
@@ -120,6 +120,156 @@ AST* createStar(const char* content) {
   node->nullable = true;
 
   return node;
+}
+
+AST* fromString(const char* str) {
+  int len = strlen(str);
+
+  if (len < 1) {
+    std::cerr << "AST children can't have <1 length\n";
+    return nullptr;
+  }
+
+  if (len == 1) return createLeaf(str[0]);
+
+  const char* closing = strrchr(str, ')');
+  const char* pipe = strrchr(str, '|');
+
+  if (closing) {
+    const char* openFirst = strchr(str, '(');
+    const char* openLast;
+
+    int partitionNumber = 0;
+    for (int i = len - 1, deepness = 0; i >= 0; i--) {
+      switch (str[i]) {
+        case ')':
+          if (deepness == 0) partitionNumber++;
+          deepness++;
+          break;
+        case '(':
+          if (deepness == 0) {
+            std::cerr << "Bad parentheses\n";
+            return nullptr;
+          }
+          deepness--;
+          if (deepness == 0 && partitionNumber == 1) openLast = &str[i];
+          break;
+        case '|':
+          if (deepness != 0) break;
+          int lenLeft = pipe - str;
+          char* left = new char[lenLeft + 1];
+          memcpy((void *)left, (const void *)str, lenLeft);
+          left[lenLeft] = '\0';
+
+          int lenRight = len - (pipe - str) - 1;
+          char* right = new char[lenRight + 1];
+          memcpy((void *)right, (const void *)(pipe + 1), lenRight);
+          right[lenRight] = '\0';
+
+          return createOr(left, right);
+      }
+    }
+
+    if (
+      openFirst == &str[0]
+      && closing == &str[len - 1]
+      && partitionNumber == 1
+    ) {
+      // if we have situation like this (...)
+      char* content = new char[len - 1];
+      memcpy((void *)content, (const void *)(str + 1), len - 2);
+      content[len - 2] = '\0';
+
+      return fromString(content);
+    } else if (
+      openFirst == &str[0]
+      && closing == &str[len - 2]
+      && str[len - 1] == '*'
+      && partitionNumber == 1
+    ) {
+      // if we have situation like this (...)*
+      char* content = new char[len];
+      memcpy((void *)content, (const void *)str, len - 1);
+      content[len - 1] = '\0';
+
+      return createStar(content);
+    } else if (
+      (closing == &str[len - 1])
+      || (
+        closing == &str[len - 2]
+        && str[len - 1] == '*'
+      )
+    ) {
+      // if we have situation like this ...(...) or ...(...)*
+      int lenLeft = openLast - str;
+      char* left = new char[lenLeft + 1];
+      memcpy((void *)left, (const void *)str, lenLeft);
+      left[lenLeft] = '\0';
+
+      int lenRight = len - (openLast - str) + 1;
+      char* right = new char[lenRight + 1];
+      memcpy((void *)right, (const void *)openLast, lenRight);
+      right[lenRight] = '\0';
+
+      return createCat(left, right, false);
+    } else if (str[len - 1] == '*') {
+      // ...(...)...*
+      char* left = new char[len - 1];
+      memcpy((void *)left, (const void *)str, len - 2);
+      left[len - 2] = '\0';
+      char right[3] = { str[len - 2], str[len - 1], '\0' };
+      return createCat(left, right, false);
+    } else {
+      // ...(...)...
+      char* left = new char[len];
+      memcpy((void *)left, (const void *)str, len - 1);
+      left[len - 1] = '\0';
+      char right[2] = { str[len - 1], '\0' };
+      return createCat(left, right, false);
+    }
+    
+  } else if (pipe) {
+    int lenLeft = pipe - str;
+    char* left = new char[lenLeft + 1];
+    memcpy((void *)left, (const void *)str, lenLeft);
+    left[lenLeft] = '\0';
+
+    int lenRight = len - (pipe - str) - 1;
+    char* right = new char[lenRight + 1];
+    memcpy((void *)right, (const void *)(pipe + 1), lenRight);
+    right[lenRight] = '\0';
+    
+    return createOr(left, right);
+  } else if (str[len - 1] == '*') {
+    // ...*
+    if (len < 2) {
+      std::cerr << "Can't take iteration of nothing\n";
+      return nullptr;
+    } else if (len > 2) {
+      char* left = new char[len - 1];
+      memcpy((void *)left, (const void *)str, len - 2);
+      left[len - 2] = '\0';
+      char right[3] = { str[len - 2], str[len - 1], '\0' };
+      return createCat(left, right, false);
+    } else if (len == 2) {
+      char content[2] = { str[0], '\0' };
+      return createStar(content);
+    }
+  } else {
+    // ...
+    char* left = new char[len];
+    memcpy((void *)left, (const void *)str, len - 1);
+    left[len - 1] = '\0';
+    char right[2] = { str[len - 1], '\0' };
+    return createCat(left, right, false);
+  }
+  std::cerr << "Failed to parse AST\n";
+  return nullptr;
+}
+
+AST* fromREGEX(const char* regex) {
+  pos = 0;
+  return createCat(regex, "#", true);
 }
 
 void printAST(AST* ast) {

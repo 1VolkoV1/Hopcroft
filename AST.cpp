@@ -1,7 +1,7 @@
 #include<algorithm>
 #include<iostream>
 #include<cstring>
-#include"AST.hpp"
+#include"Ast.hpp"
 
 /**
  * Global variable used for leaf numbers
@@ -312,6 +312,7 @@ void putinmap(std::vector<int> *map, AST* ast) {
       putinmap(map, ast->right);
     case star_node:
       putinmap(map, ast->left);
+    default: break;
   }
 }
 

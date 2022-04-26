@@ -25,6 +25,8 @@ class Automata {
     );
     //test if the Automata accept a word:
     bool test(const char* word);
+    const char* match(const char* word);
+
     
     //print a vector:
     static void printVec(

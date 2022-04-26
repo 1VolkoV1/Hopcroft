@@ -54,7 +54,7 @@ int testFromAST() {
     std::cout << std::endl;
   }
 
-  /*Automata* B = fromAST(ast);
+  Automata* B = fromAST(ast);
 
   std::cout << *B << std::endl;
   std::cout << "Want to test your automata?" << std::endl;
@@ -62,7 +62,7 @@ int testFromAST() {
   char* str = (char*)malloc(1024 * sizeof(char));
   std::cin >> str;
   std::cout << (B->test((const char*)str) ? "1\n" : "0\n");
-  */
+  
   return 0;
 }
 

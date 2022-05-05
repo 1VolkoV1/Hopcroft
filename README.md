@@ -97,7 +97,7 @@ Has properties:
 * `fromAST` - creates DFA based on AST. Takes it's `alphabet`, `CharValueMap`, `FollowPos` 
 
 ### Minimization
-Thus module emplements Hopcroft Algorithm and it is based on partitioning indistinguishable states. 
+This module emplements Hopcroft Algorithm and it is based on partitioning indistinguishable states. 
 
 * `eq` - checks if partitions are equal (deep equality)
 * `areInSame` - checks is two states are in same partition

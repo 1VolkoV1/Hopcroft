@@ -21,7 +21,7 @@ bool Automata::test(const char* word) {
   int q_cur = q0;
   int i = 0;
   char c;
-  while (c = word[i++]) {
+  while ((c = word[i++])) {
     // 1. find corresponding charcode in alphabet
     auto search = std::find(T.begin(), T.end(), c);
     if (search == T.end()) return false;
@@ -45,7 +45,7 @@ const char* Automata::match(const char* word) {
   int q_cur = q0;
   int i = 0;
   char c;
-  while (c = word[i++]) {
+  while ((c = word[i++])) {
     // 1. find corresponding charcode in alphabet
     auto search = std::find(T.begin(), T.end(), c);
     if (search == T.end()) return nullptr;

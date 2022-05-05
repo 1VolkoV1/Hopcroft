@@ -66,13 +66,13 @@ class Automata {
       printVec(stream, Q_f);
       stream << "," << std::endl;
 
-      stream << "\t\"f\": {" << std::endl;
+      stream << "\t\"f\": [" << std::endl;
       for (int i = 0; i < f.size(); i++) {
         stream << "\t\t";
         printVec(stream, f[i]);
         stream << "," << std::endl;
       }
-      stream << "\t}" << std::endl;
+      stream << "\t]" << std::endl;
 
       stream << "}";
       return stream;

@@ -1,7 +1,7 @@
 #include<algorithm>
 #include<iostream>
 #include<cstring>
-#include"Ast.hpp"
+#include"AST.hpp"
 
 /**
  * Global variable used for leaf numbers

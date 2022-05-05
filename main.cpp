@@ -3,6 +3,7 @@
 #include"common.cpp"
 #include"AST.cpp"
 #include"Automata.cpp"
+#include"minimize.cpp"
 
 //test automata's work on input word:
 int testFromAutomata() {
@@ -66,8 +67,61 @@ int testFromAST() {
   return 0;
 }
 
+int minimization() {
+  Automata A(
+    { 'a' },
+    { 0, 1, 2, 3 },
+    0,
+    { 0, 2 },
+    { { 1 }, { 2 }, { 3 }, { 0 } }
+  );
+  std::cout << A;
+  Automata* B = minimize(&A);
+  std::cout << *B;
+  return 0;
+}
+
+int interactive() {
+  char* str = (char*)malloc(1024 * sizeof(char));
+
+  std::cin >> str;
+
+  AST* ast = fromREGEX(str);
+
+  // logging
+  /*
+    std::cout << "ast: " << std::endl;
+    printAST(ast);
+    std::cout << std::endl;
+    std::vector<std::vector<int>> followpos = FollowPos(ast);
+    std::cout << "followpos:\n";
+    for (int i = 0; i < followpos.size(); i++) {
+      Automata::printVec(std::cout, followpos[i]);
+      std::cout << std::endl;
+    }
+  */
+
+  Automata* B = fromAST(ast);
+
+  std::cout << *B << std::endl;
+  std::cout << "Want to test your automata?" << std::endl;
+
+  std::cin >> str;
+  std::cout << (B->test((const char*)str) ? "1\n" : "0\n");
+  return 0;
+}
+
+int result() {
+  char* str = (char*)malloc(1024 * sizeof(char));
+  std::cin >> str;
+  Automata* A = minFromREGEX(str);
+  std::cout << *A;
+  return 0;
+}
+
+
 int main(int argc, char** argv) {
-  testFromAST();
+  result();
 
 
 

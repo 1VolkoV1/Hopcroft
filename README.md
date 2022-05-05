@@ -96,9 +96,20 @@ Has properties:
 #### Other functions:
 * `fromAST` - creates DFA based on AST. Takes it's `alphabet`, `CharValueMap`, `FollowPos` 
 
+### Minimization
+Thus module emplements Hopcroft Algorithm and it is based on partitioning indistinguishable states. 
+
+* `eq` - checks if partitions are equal (deep equality)
+* `areInSame` - checks is two states are in same partition
+* `push` - pushes state into partition
+* `pushIfFree` - pushes state only once (makes sure that one state is present only in one partition) 
+* `add` - adds to states into different or same partition based on boolean variable
+* `minimize` - runs Hopcroft algotithm on the automata given, returns minimized automata
+
 
 ## Scientific reference
 
 * converting regex to DFA - https://www.geeksforgeeks.org/regular-expression-to-dfa/
 * minimization algorithm - https://geeksforgeeks.org/minimization-of-dfa
 * vector concatenation function - https://github.com/ckshitij/RE_TO_DFA/blob/master/RE_TO_DFA.cpp#L14
+

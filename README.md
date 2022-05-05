@@ -1,3 +1,5 @@
+![echoscreen.png](echoscreen.png)
+
 # Minimal DFA from regex
 
 ## how to use

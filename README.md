@@ -1,4 +1,5 @@
 ![echoscreen.png](echoscreen.png)
+![output.png](output.png)
 
 # Minimal DFA from regex
 
@@ -12,6 +13,11 @@ g++ main.c
 Then run program. Input regular expression (cin).
 The output is json-compatible form of minimal dfa
 resolving the regular language given.
+
+We modificate a program from source in python in order to visualize automata. You can run it like so:
+```
+python script.py
+```
 
 ## Project structure
 
@@ -115,3 +121,4 @@ This module emplements Hopcroft Algorithm and it is based on partitioning indist
 * minimization algorithm - https://geeksforgeeks.org/minimization-of-dfa
 * vector concatenation function - https://github.com/ckshitij/RE_TO_DFA/blob/master/RE_TO_DFA.cpp#L14
 
+* program for visualization - https://github.com/nefanov/fltp/blob/main/p1/examples/transform/json_visualize_fa.py

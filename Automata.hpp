@@ -70,7 +70,8 @@ class Automata {
       for (int i = 0; i < f.size(); i++) {
         stream << "\t\t";
         printVec(stream, f[i]);
-        stream << "," << std::endl;
+        if (i != f.size() - 1) stream << ",";
+        stream << std::endl;
       }
       stream << "\t]" << std::endl;
 

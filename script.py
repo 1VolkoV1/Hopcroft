@@ -25,6 +25,6 @@ graph.add_edge(pydot.Edge('\2', data['q0'], arrowhead='normal', color='blue'))
 
 for i, edge in enumerate(data['f']):
   for l, point in enumerate(edge):
-    graph.add_edge(pydot.Edge(i, point, label=data['T'][l], arrowhead='normal', color='black'))
+    graph.add_edge(pydot.Edge(i, point, label=chr(data['T'][l]), arrowhead='normal', color='black'))
 
 graph.write_png(sys.argv[2] if len(sys.argv)>2 else 'output.png')

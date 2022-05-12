@@ -14,6 +14,13 @@ Then run program. Input regular expression (cin).
 The output is json-compatible form of minimal dfa
 resolving the regular language given.
 
+#####flags:
+
+`-o test.json` - output to file;
+`-i test.json` - output from file;
+`-I` - after using this flag you can check if a word matches regular expression(the principle of operation is shown in the Readme header).
+
+
 We modificate a program from source in python in order to visualize automata. You can run it like so:
 ```
 python script.py

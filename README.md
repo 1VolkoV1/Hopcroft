@@ -18,7 +18,7 @@ resolving the regular language given.
 
 `-o test.json` - output to file;
 `-i test.json` - output from file;
-`-I` - after using this flag you can check if a word matches regular expression(the principle of operation is shown in the Readme header).
+`-I` - after using this flag you can check if a word matches regular expression(the principle of operation is shown in the README header).
 
 
 We modificate a program from source in python in order to visualize automata. You can run it like so:

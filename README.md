@@ -17,7 +17,7 @@ resolving the regular language given.
 ##### flags:
 
 `-o test.json` - output to file;
-`-i test.json` - output from file;
+`-i test.json` - iutput from file;
 `-I` - after using this flag you can check if a word matches regular expression(the principle of operation is shown in the README header).
 
 

@@ -14,7 +14,7 @@ Then run program. Input regular expression (cin).
 The output is json-compatible form of minimal dfa
 resolving the regular language given.
 
-#####flags:
+##### flags:
 
 `-o test.json` - output to file;
 `-i test.json` - output from file;

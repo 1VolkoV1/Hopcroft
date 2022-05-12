@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<fstream>
 #include"common.cpp"
 #include"AST.cpp"
 #include"Automata.cpp"
@@ -119,9 +120,82 @@ int result() {
   return 0;
 }
 
+int orchestrator(int argc, char** argv) {
+  if (argc == 1) {
+    result();
+    return 0;
+  }
+  int i = 1;
+  bool isInteractive = false;
+  std::ifstream ifile;
+  std::ofstream ofile;
+  while (i < argc) {
+    if (
+      argv[i][0] == '-'
+      && argv[i][1]
+      && !argv[i][2]
+    ) {
+      if (argv[i][1] == 'o') {
+        if (ofile.is_open()) ofile.close();
+        ofile.open(argv[i + 1], std::ofstream::out | std::ofstream::app);
+      } else if (argv[i][1] == 'i') {
+        if (ifile.is_open()) ifile.close();
+        ifile.open(argv[i + 1], std::ifstream::in);
+      } else if (argv[i][1] == 'I') {
+        isInteractive = true;
+      } else {
+        std::cerr << "Unsupported option: " << argv[i];
+        return 1;
+      }
+      i++;
+    }
+    i++;
+  }
+
+  char* instr = (char*)malloc(sizeof(char) * 1024);
+  if (!ifile.is_open()) {
+    std::cin >> instr;
+  } else {
+    ifile >> instr;
+    ifile.close();
+  }
+
+  Automata* A = minFromREGEX(instr);
+
+  if (isInteractive) {
+
+    if (!ifile.is_open()) {
+      std::cin >> instr;
+    } else {
+      ifile >> instr;
+      ifile.close();
+    }
+
+    const char* res = (A->test((const char*)instr) ? "1\n" : "0\n");
+
+    if (!ofile.is_open()) {
+      std::cout << res;
+    } else {
+      ofile << res;
+      ofile.close();
+    }
+
+  } else {
+
+    if (!ofile.is_open()) {
+      std::cout << *A;
+    } else {
+      ofile << *A;
+      ofile.close();
+    }
+
+  }
+
+  return 0;
+}
 
 int main(int argc, char** argv) {
-  result();
+  orchestrator(argc, argv);
 
 
 

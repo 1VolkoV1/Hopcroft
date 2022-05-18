@@ -2,9 +2,10 @@ import json
 import pydot
 import sys
 import os
-os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
 
 
+
+os.environ["PATH"] += os.pathsep + 'C:' + os.pathsep + 'Program Files' + os.pathsep + 'Graphviz' + os.pathsep + 'bin'
 # prepare data like so: echo "a(aa)*b(bb)*" | ./a.out > test.json
 
 filename = sys.argv[1] if len(sys.argv)>1 else 'test.json'
